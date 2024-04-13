@@ -43,6 +43,11 @@ ion-segment{
   align-items: center;
 }
 
+ion-button {
+  padding-top: 20px;
+  --box-shadow: none;
+}
+
 .submit{
   height: 44px;
   --border-radius: 10px;

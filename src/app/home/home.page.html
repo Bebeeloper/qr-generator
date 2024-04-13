@@ -24,7 +24,7 @@
 
   <!-- Show generate QR panel -->
   <div class="segment" *ngIf="segment === 'generate'">
-      <div class="qr-container">
+      <div id="qrScreenshot" class="qr-container">
         <div class="qr-background-box">
           <div class="qr-radius">
             <qr-code [value]="qrText" size="240" errorCorrectionLevel="M"></qr-code>
@@ -46,5 +46,9 @@
         rows="2"
         [autoGrow]="true"
       ></ion-textarea>
+      <ion-button (click)="captureScreen()" *ngIf="qrText" color="secondary" expand="block">
+        Compartir
+        <ion-icon slot="end" name="share-social-outline"></ion-icon>
+      </ion-button>
   </div>
 </ion-content>
