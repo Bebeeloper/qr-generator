@@ -1,12 +1,12 @@
 <ion-header>
-  <ion-toolbar color="tertiary">
+  <ion-toolbar color="secondary">
     <ion-title>
       QR Generator
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding ion-text-center">
+<ion-content class="">
   
   <ion-segment [(ngModel)]="segment" mode="ios" >
     <ion-segment-button value="scan">
@@ -24,24 +24,27 @@
 
   <!-- Show generate QR panel -->
   <div class="segment" *ngIf="segment === 'generate'">
-    <div class="segment-content">
-      <div class="qrImage">
-        <div class="d-flex-center">
-          <div class="d-flex-center qr-wrapper">
-            <qr-code [value]="qrText" size="190" errorCorrectionLevel="M"></qr-code>
+      <div class="qr-container">
+        <div class="qr-background-box">
+          <div class="qr-radius">
+            <qr-code [value]="qrText" size="240" errorCorrectionLevel="M"></qr-code>
+            <img *ngIf="!qrText" class="qr-gif" src="../../assets/images/text-box.gif"  alt="">
           </div>
         </div>
-        <div class="ion-padding-top">
+        <div *ngIf="qrText" class="text-container">
           {{qrText}}
+        </div>
+        <div *ngIf="!qrText" class="text-container">
+          Escribe un texto para convertirlo a QR
         </div>
       </div>
       <ion-textarea
-        class="ion-padding-top"
         label="Escribe aquí tu texto"
         labelPlacement="stacked"
         fill="outline"
         [(ngModel)]="qrText"
+        rows="2"
+        [autoGrow]="true"
       ></ion-textarea>
-    </div>
   </div>
 </ion-content>
