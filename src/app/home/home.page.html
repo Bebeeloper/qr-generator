@@ -6,15 +6,42 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding ion-text-center">
   
-  <ion-segment value="pizza" mode="ios">
-    <ion-segment-button value="pizza">
-      <ion-label>Pizza</ion-label>
+  <ion-segment [(ngModel)]="segment" mode="ios" >
+    <ion-segment-button value="scan">
+      <ion-label>Escanear QR</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="pasta">
-      <ion-label>Pasta</ion-label>
+    <ion-segment-button value="generate">
+      <ion-label>Generar QR</ion-label>
     </ion-segment-button>
   </ion-segment>
+  
+  <!-- Show scan panel -->
+  <div *ngIf="segment === 'scan'">
+    Scan panel
+  </div>
 
+  <!-- Show generate QR panel -->
+  <div class="segment" *ngIf="segment === 'generate'">
+    <div class="segment-content">
+      <div class="qrImage">
+        <div class="d-flex-center">
+          <div class="d-flex-center qr-wrapper">
+            <qr-code [value]="qrText" size="190" errorCorrectionLevel="M"></qr-code>
+          </div>
+        </div>
+        <div class="ion-padding-top">
+          {{qrText}}
+        </div>
+      </div>
+      <ion-textarea
+        class="ion-padding-top"
+        label="Escribe aquí tu texto"
+        labelPlacement="stacked"
+        fill="outline"
+        [(ngModel)]="qrText"
+      ></ion-textarea>
+    </div>
+  </div>
 </ion-content>
