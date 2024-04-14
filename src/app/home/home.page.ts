@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import html2canvas from 'html2canvas';
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import { Share } from '@capacitor/share';
+import { LoadingController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -11,14 +14,18 @@ export class HomePage {
   segment = 'generate';
   qrText = 'https://debugploy.com/';
 
-  constructor() {}
+  constructor(
+    private loadingController: LoadingController,
+    private platfom: Platform
+  ) {}
 
   captureScreen() {
 
     const qrContainer = document.getElementById("qrScreenshot") as HTMLElement;
 
     html2canvas(qrContainer).then((canvas: HTMLCanvasElement) => {
-      this.downloadImage(canvas);
+      if (this.platfom.is('capacitor')) this.shareImageMobile(canvas);
+      else this.downloadImage(canvas);
     });
     
   }
@@ -28,5 +35,33 @@ export class HomePage {
     link.href = canvas.toDataURL();
     link.download = 'qr.png';
     link.click();
+  }
+
+  async shareImageMobile(canvas: HTMLCanvasElement){
+    let base64 = canvas.toDataURL();
+    let path = 'qr.png';
+
+    const loading = await this.loadingController.create({
+      spinner: 'bubbles'
+    });
+    await loading.present();
+
+    await Filesystem.writeFile({
+      path,
+      data: base64,
+      directory: Directory.Cache,
+    }).then(async (res) => {
+
+      let uri = res.uri;
+      await Share.share({
+        url: uri,
+      });
+      await Filesystem.deleteFile({
+        path,
+        directory: Directory.Cache,
+      });
+    }).finally(() => {
+      loading.dismiss();
+    });
   }
 }
