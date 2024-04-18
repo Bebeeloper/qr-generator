@@ -11,7 +11,7 @@ import { LoadingController, Platform } from '@ionic/angular';
 })
 export class HomePage {
 
-  segment = 'generate';
+  segment = 'scan';
   qrText = 'https://debugploy.com/';
 
   constructor(

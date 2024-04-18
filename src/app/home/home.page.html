@@ -18,8 +18,25 @@
   </ion-segment>
   
   <!-- Show scan panel -->
-  <div *ngIf="segment === 'scan'">
-    Scan panel
+  <div class="segment-scan" *ngIf="segment === 'scan'">
+    <div>
+      <img src="../../assets/images/qr-code.gif"  alt="">
+    </div>
+    <p>Escanéa un código QR</p>
+    <ion-row>
+      <ion-col size="5">
+        <ion-button class="submit" expand="block">
+          Escanear
+          <ion-icon slot="end" name="scan-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="5">
+        <ion-button class="submit" expand="block">
+          Seleccionar
+          <ion-icon slot="end" name="image-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
   </div>
 
   <!-- Show generate QR panel -->
